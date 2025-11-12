@@ -100,8 +100,7 @@ class BisectingKMeansScratch:
         clusters = {0: np.arange(len(X))}  # cluster_id -> indices
 
         def run_2means_on_indices(idx, seed):
-            # simple 2-means using our scratch KMeans
-            from .kmeans import KMeansScratch  # local import safe here
+
             km = KMeansScratch(n_clusters=2, max_iter=self.kmeans_iter, random_state=seed)
             km.fit(X[idx])
             return km.labels_, km.inertia_
