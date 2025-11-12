@@ -23,6 +23,6 @@ All data are numeric and pre-cleaned (missing rows dropped).
 - Used for **K-Means** and **Bisecting K-Means** clustering to identify customer segments.
 
 ## File Info
-- File name: `bank_marketing.csv`
+- File name: `2024_bank_marketing_with_clusters.csv.`
 - Delimiter: `,`
 - Size: ~40,000 rows × 10 columns
