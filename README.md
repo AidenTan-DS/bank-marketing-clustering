@@ -120,6 +120,7 @@ See full evaluation results:
 ## 🎨 Streamlit App
 
 The project includes an interactive Streamlit dashboard.
+![Bank Marketing Clustering Dashboard](docs/app_screenshot.png)
 
 Run it locally:
 
