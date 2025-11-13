@@ -30,7 +30,7 @@ bank-marketing-clustering/
 │
 ├── src/
 │   ├── kmeans.py
-│   ├── bisecting_kmeans.py
+│   ├── kmeans.py
 │   ├── pca_utils.py
 │   └── train_eval.py
 │
