@@ -1,6 +1,6 @@
 # src/app_streamlit.py
 # Interactive clustering demo for the Bank Marketing project
-
+#check
 import os
 import sys
 
@@ -17,7 +17,7 @@ from sklearn.metrics import silhouette_score
 from sklearn.decomposition import PCA
 
 from kmeans import KMeansScratch
-from bisecting_kmeans import BisectingKMeansScratch
+from kmeans import BisectingKMeansScratch
 
 # ---------- Streamlit page config ----------
 st.set_page_config(
