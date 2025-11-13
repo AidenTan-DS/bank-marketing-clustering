@@ -94,7 +94,10 @@ if uploaded:
     df = pd.read_csv(uploaded)
 
     st.subheader("📁 Raw Data Preview")
-    st.dataframe(df.head())
+    block_names = {"cluster", "clusters", "label", "id", "index"}
+    drop_cols_raw = [c for c in df.columns if c.lower() in block_names]
+    df_display = df.drop(columns=drop_cols_raw, errors="ignore")
+    st.dataframe(df_display.head())
 
     # 2. Select numeric & feature columns
     num_all, features = load_numeric(df)
