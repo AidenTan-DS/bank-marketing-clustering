@@ -55,22 +55,32 @@ uploaded = st.sidebar.file_uploader("Upload CSV file", type=["csv"])
 # ---------- Helper functions ----------
 def load_numeric(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
     """
-    Select numeric columns, then drop 'id' / 'cluster' style columns
-    from the feature set used for clustering.
+    Select numeric columns and remove unwanted identifier-style columns
+    (e.g., cluster, id, label) from BOTH:
+      - num_all: numeric columns shown to the user
+      - features: numeric columns used for clustering
 
     Returns:
-        num_all: all numeric columns
-        features: numeric columns actually used for clustering
+        num_all: filtered numeric columns (clean display)
+        features: filtered numeric columns used for clustering
     """
+    # Select only numeric columns
     num_all = df.select_dtypes(include=[np.number]).copy()
 
-    # columns we do NOT want to use as features
+    # Columns we want to exclude entirely
     block_names = {"cluster", "clusters", "label", "id", "index"}
-    drop_cols = [c for c in num_all.columns if c.lower() in block_names]
 
-    features = num_all.drop(columns=drop_cols, errors="ignore")
+    # Keep only columns that are NOT blocked
+    cols_to_keep = [c for c in num_all.columns if c.lower() not in block_names]
+
+    # Apply filtering to BOTH num_all and features
+    num_all = num_all[cols_to_keep]
+    features = num_all.copy()
 
     return num_all, features
+
+
+   
 
 
 def safe_silhouette(X_embedded: np.ndarray, labels: np.ndarray, max_samples: int = 1500) -> float:
