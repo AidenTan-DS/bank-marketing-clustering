@@ -106,16 +106,34 @@ class BisectingKMeansScratch:
             return km.labels_, km.inertia_
 
         while len(clusters) < self.k:
-            # pick cluster with largest SSE
-            cid, idx = max(clusters.items(), key=lambda kv: self._sse_for_indices(X, kv[1]))
-
-            # split with multiple restarts of 2-means, keep best
-            best = None
+            splittable = {cid: idx for cid, idx in clusters.items() if len(idx) > 1}
+            if not splittable:
+                break
+            cid, idx = max(splittable.items(), key=lambda kv: self._sse_for_indices(X, kv[1]))
+            
+            # split with multiple restarts of 2-means, keep best (no empty child)
+            best_labels = None
+            best_inertia = None
             for r in range(self.restarts):
                 labels_local, inertia_local = run_2means_on_indices(idx, self.random_state + r)
-                if best is None or inertia_local < best[0]:
-                    best = (inertia_local, labels_local)
-
+            
+                
+                if (labels_local == 0).sum() == 0 or (labels_local == 1).sum() == 0:
+                    continue
+            
+                if best_inertia is None or inertia_local < best_inertia:
+                    best_inertia = inertia_local
+                    best_labels = labels_local
+            
+           
+            if best_labels is None:
+                if self.verbose:
+                    print(f"[warn] Unable to split cluster {cid} without empty child, stop splitting it.")
+               
+                break
+            
+         
+                
             left = idx[best[1] == 0]
             right = idx[best[1] == 1]
 
