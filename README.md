@@ -127,7 +127,9 @@ Run it locally:
 ```bash
 streamlit run src/app_streamlit.py
 ```
+## Live Demo
 
+Streamlit app: https://aidentan-ds-bank-marketing-clustering-srcapp-streamlit-zj8e63.streamlit.app
 Features:
 
 - Choose number of clusters *k*  
